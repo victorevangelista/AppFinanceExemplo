@@ -30,11 +30,13 @@
 
 		vm.showTabUpdate = function(billingCycle){
 			vm.billingCycle = billingCycle
+			vm.calculateValues()
 			tabs.show(vm, {tabUpdate: true})
 		}
 
 		vm.showTabDelete = function(billingCycle){
 			vm.billingCycle = billingCycle
+			vm.calculateValues()
 			tabs.show(vm, {tabDelete: true})
 		}
 
