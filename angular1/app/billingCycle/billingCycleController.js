@@ -14,6 +14,7 @@
 			$http.get(url).then(function(response){
 				vm.billingCycle = {credits: [{}], debts: [{}]}
 				vm.billingCycles = response.data
+				vm.calculateValues()
 				tabs.show(vm, {tabList: true, tabCreate: true})
 			})
 		}
@@ -85,6 +86,23 @@
 			if(vm.billingCycle.debts.length > 1){
 				vm.billingCycle.debts.splice(index, 1)
 			}
+		}
+
+		vm.calculateValues = function(){
+			vm.credit = 0
+			vm.debt = 0
+
+			if(vm.billingCycle){
+				vm.billingCycle.credits.forEach(function({value}) {
+					vm.credit += !value || inNaN(value) ? 0 : parseFloat(value)
+				})
+
+				vm.billingCycle.debts.forEach(function({value}){
+					vm.debt += !value || isNaN(value) ? 0 : parceFloat(value)
+				})
+			}
+
+			vm.total = vm.credit - vm.debt
 		}
 
 
