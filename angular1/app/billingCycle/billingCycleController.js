@@ -66,11 +66,13 @@
 
 		vm.cloneCredit = function(index, {name, value}){
 			vm.billingCycle.credits.splice(index + 1, 0, {name, value})
+			vm.calculateValues()
 		}
 
 		vm.deleteCredit = function(index){
 			if(vm.billingCycle.credits.length > 1){
 				vm.billingCycle.credits.splice(index, 1)
+				vm.calculateValues()
 			}
 		}
 
@@ -80,11 +82,13 @@
 
 		vm.cloneDebt = function(index, {name, value, status}){
 			vm.billingCycle.debts.splice(index + 1, 0, {name, value, status})
+			vm.calculateValues()
 		}
 
 		vm.deleteDebt = function(index){
 			if(vm.billingCycle.debts.length > 1){
 				vm.billingCycle.debts.splice(index, 1)
+				vm.calculateValues()
 			}
 		}
 
@@ -94,11 +98,11 @@
 
 			if(vm.billingCycle){
 				vm.billingCycle.credits.forEach(function({value}) {
-					vm.credit += !value || inNaN(value) ? 0 : parseFloat(value)
+					vm.credit += !value || isNaN(value) ? 0 : parseFloat(value)
 				})
 
 				vm.billingCycle.debts.forEach(function({value}){
-					vm.debt += !value || isNaN(value) ? 0 : parceFloat(value)
+					vm.debt += !value || isNaN(value) ? 0 : parseFloat(value)
 				})
 			}
 
