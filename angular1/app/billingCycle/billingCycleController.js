@@ -16,6 +16,11 @@
 				vm.billingCycles = response.data
 				vm.calculateValues()
 				tabs.show(vm, {tabList: true, tabCreate: true})
+
+				$http.get(`${url}/count`).then(function(response){
+					vm.pages = Math.ceil(response.data.value / 10)
+					console.log('pages: ', vm.pages)
+				})
 			})
 		}
 
