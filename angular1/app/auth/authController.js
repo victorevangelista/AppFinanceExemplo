@@ -1,29 +1,32 @@
 (function () {
-	angular.module('primeiraApp').controller('AuthCtrl', [
-		'$location',
-		'msgs',
-		AuthController
-	])
 
-	function AuthController($location, msgs){
-		const vm = this
+    angular.module('primeiraApp').controller('AuthCtrl', [
+        '$location',
+        'msgs',
+        'auth',
+        AuthController
+    ])
 
-		vm.loginMode = true
+    function AuthController($location, msgs, auth) {
+        const vm = this
 
-		vm.changeMode = () => vm.loginMode = !vm.loginMode
+        vm.loginMode = true
 
-		vm.login = () => {
-			console.log(`Login... ${vm.user.email}`)
-		}
+        vm.changeMode = () => vm.loginMode = !vm.loginMode
 
-		vm.signup = () => {
-			console.log(`Signup... ${vm.user.email}`)	
-		}
+        vm.login = () => {
+            auth.login(vm.user, err => err ? msgs.addError(err) : $location.path('/'))
+        }
 
-		vm.getUser = () => ({name: 'Victor Evangelista', email: 'meuemail@gmail.com'})
+        vm.signup = () => {
+            auth.signup(vm.user, err => err ? msgs.addError(err) : $location.path('/'))
+        }
 
-		vm.logout = () => {
-			console.log('Logout...')
-		}
-	}
+        vm.getUser = () => auth.getUser()
+
+        vm.logout = () => {
+            auth.logout(() => $location.path('/'))
+        }
+    }
+
 })()
