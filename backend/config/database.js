@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
-module.exports = mongoose.connect('mongodb://localhost/db_finance')
+mongoose.Promise = global.Promise
+
+const url = process.env.MONGOLAB_URI ? process.env.MONGOLAB_URI : 'mongodb://localhost/db_finance'
+module.exports = mongoose.connect(url, { useMongoClient: true })
 //string de conexão com usuário, senha e porta ('mongodb://usuario:senha@localhost:port/db_finance')
 
 
